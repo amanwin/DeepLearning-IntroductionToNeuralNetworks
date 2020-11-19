@@ -29,17 +29,17 @@ Let’s begin our journey into deep learning with an introduction to artificial 
 
 Some of the ealier bottlenecks with Neural Networks are:
 
-[title](img/bottlenecks_nn.JPG)
+![title](img/bottlenecks_nn.JPG)
 
-[title](img/deeplearning_applications.JPG)
+![title](img/deeplearning_applications.JPG)
 
 Artificial neural networks are said to be inspired by the structure of the brain. Let’s first understand the basic structure of the brain, the structure of a neuron and how information travels through neurons.
 
-[title](img/human_brain_structure.JPG)
+![title](img/human_brain_structure.JPG)
 
 Brain is made of several billions of neurons. Each neuron has input coming from multiple other neurons. 
 
-[title](img/neuron.JPG)
+![title](img/neuron.JPG)
 
 Simply speaking, the biological neuron works as follows - it receives signals through its **dendrites** which are either **amplified** or **inhibited** as they pass through the **axons** to the dendrites of other neurons.
 
@@ -90,7 +90,7 @@ Now that you understand the design of a perceptron, think about how it can be us
 
 In the following lecture, you will understand how the perceptron can act as a classifier.
 
- ![title](img/perceptron1perceptron_classifier.png)
+ ![title](img/perceptron_classifier.png)
 
  You saw how the perceptron works as a classifier. The weights represent the importance of the corresponding feature for classification. You might have also noticed that we has used a **sign function**. The 'sign function' is similar to the step function - it outputs +1 when the input is greater than 0 and -1 otherwise. In a binary classification setting, +1 and -1 represent the two classes.
 
@@ -214,7 +214,7 @@ You have seen how we can define the inputs and outputs of a neural network. In t
 
 ![title](img/sigmoid.png)
 
-![title](img/sigmoid.JPG)
+![title](img/sigmoid1.JPG)
 
 Let's see how we would define inputs and outputs for image recognition on the famous MNIST dataset.
 
@@ -268,7 +268,7 @@ Let's now have a closer look at the **hyperparameters** - the number of neurons 
 
 The following segment have defined the symbols and explained them using the MNIST dataset as an example. 
 
-![title](img/nn_notations1.png)
+![title](img/nn_notations1.JPG)
 
 ### Activation Functions
 In the previous segments, you studied the topology, the underlying simplifying assumptions and the hyperparameters and parameters of neural networks. You will now understand how the output is calculated from a single neuron using an **activation function** and various types and properties of common activation functions.
