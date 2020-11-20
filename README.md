@@ -298,3 +298,102 @@ The most popular activation functions used for neural networks are:
 ![title](img/activation_function1.JPG)
 
 You can also show that in a sigmoid neuron, if you multiply the weights and biases by a positive constant c>0, as the limit as c→∞ the behaviour of this sigmoid neurons is exactly the same as that of a perceptron, given w⋅x+b≠0 for the input x.
+
+## Feed Forward in Neural Networks
+
+### Introduction
+Welcome to the second session on **Feedforward Neural Networks**.
+
+In the previous session, you understood the architecture of neural networks and their inspiration from the brain. You also learnt the working of an artificial neuron, the hyperparameters and parameters of neural networks and various simplifying assumptions.
+
+In this session, you will learn how information flows in a neural network from the input layer to the output layer. The information flow in this direction is often called **feedforward**.
+
+### Flow of Information in Neural Networks - Between 2 Layers
+In the previous session, you learnt about the structure, topology, hyperparameters and the simplifying assumptions of neural networks. In this segment, you will understand how the information flows from one layer to the adjacent one in a neural network.  
+
+In artificial neural networks, the output from one layer is used as input to the next layer. Such networks are called **feedforward neural networks**. This means there are no loops in the network - information is always fed forward, never fed back. Let’s start off with understanding the feedforward mechanism between two layers. For simplicity, we have taken the input and the first layer to demonstrate how information flows between any two layers.
+
+![title](img/feed_forward_nn.png)
+
+You learnt how information flows from one layer to another. We have the two layers as follows:
+
+![title](img/feed_forward_nn1.JPG)
+
+![title](img/feed_forward_nn2.JPG)
+
+![title](img/feed_forward_nn3.JPG)
+
+![title](img/feed_forward_nn4.JPG)
+
+![title](img/feed_forward_nn5.JPG)
+
+![title](img/feed_forward_nn6.JPG)
+
+![title](img/feed_forward_nn7.JPG)
+
+### Information Flow - Image Recognition
+Let’s now study the feedforward algorithm using a small example. We will take the example of a 2-pixel x 2-pixel greyscale image. We will discuss a simple network whose task is to compute an amplified count of the number of grey (or 'on') pixels in the image.
+
+In the example discussed, the objective of the network is to calculate the amplified count (or number) of 'on' pixels in the 2 x 2 image. Note that the outputs of hidden layers in large, real networks are not usually interpretable, we have used this example only to get an intuitive understanding of the feedforward process.
+
+![title](img/feed_forward_calc.png)
+
+The first hidden layer in the network counts the number of grey pixels in the image - the first and the second neurons count the number of grey pixels in row-1 and row-2 respectively. Since the input is a 2 x 2 image, and the first hidden layer has two neurons, the weight matrix associated with it is of dimensions 2 x 4:
+
+![title](img/feed_forward_calc1.JPG)
+
+![title](img/feed_forward_calc2.JPG)
+
+Note that we have assumed that all the biases are 0 and that we have used the trivial identity activation function which is a passthrough function.
+
+### Feedforward Algorithm
+Having understood how the information flows in the network, let’s write the **pseudocode for a feedforward pass** through the network for a single data point ***xi***. This will help you implement your own neural network in Numpy.
+
+![title](img/feedforward_algo.JPG)
+
+![title](img/feedforward_algo1.JPG)
+
+![title](img/feedforward_algo2.JPG)
+
+Until now, we have been doing feed forward for one single data point at a time (i.e. a single image, in case of the MNIST dataset). But the training data may have millions of data points. For e.g., the MNISt dataset itself has about 60,000 images in the training set.
+
+Let’s now study how to do feed forward for an **entire batch of data points** in one go. We will use vectorized computation techniques which you will study in the next segment.
+
+### Vectorized Feedforward Implementation
+In the previous segment, we had written pseudocode for doing feedforward for a single data point ***xi*** at a time. Of course, training data has multiple data points, and we need to perform feedforward computation for all of them. 
+
+A bad way to do that would be to write a 'for loop' iterating through all the data points. As the data scientist inside you would have guessed, there must be a more efficient way of doing it. 
+
+Let’s now study how to do feed forward for an **entire batch of data points** in one go using **vectorized computation techniques**.
+
+**Vectorized implementation** means to perform the computation (here, feedforward) for multiple data points using matrices. This will be much quicker than looping through one data point at a time.
+
+Before we move to the vectorized implementation, let’s try writing the feedforward pseudocode for a set of **m** data points using a 'for loop':
+
+![title](img/vectorized_feed_forward.JPG)
+
+You can see that we require two nested 'for loops'. This will become computationally quite expensive if we have a large dataset (which is often the case with neural networks).
+
+Now let’s understand how doing the same using **matrices** can be much efficient.
+
+![title](img/vectorized_feed_forward1.JPG)
+
+![title](img/vectorized_feed_forward2.JPG)
+
+![title](img/vectorized_feed_forward3.JPG)
+
+### Understanding Vectorized Feedforward Implementation
+In the previous segment, you saw how multiple data points can be fed forward as a batch. In this segment, we will try to make sense of the matrix multiplications mentioned in the feedforward algorithm. Let’s go through some nice properties and tricks of matrix multiplication in this lecture:
+
+Let’s try to understand the block matrix multiplication using some examples. It would be convenient for you to use numpy to do the following matrix calculations. To compute matrix multiplication of A and B, you need to write numpy.dot(A, B) in python. Hence, this product is often referred to as the dot product of matrices.
+
+![title](img/block_matrix.JPG)
+
+![title](img/block_matrix1.JPG)
+
+![title](img/block_matrix2.JPG)
+
+![title](img/feed_forward_propagation.png)
+
+![title](img/feed_forward_propagation1.JPG)
+
