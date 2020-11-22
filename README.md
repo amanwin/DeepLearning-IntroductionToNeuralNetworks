@@ -397,3 +397,256 @@ Let’s try to understand the block matrix multiplication using some examples. I
 
 ![title](img/feed_forward_propagation1.JPG)
 
+## Feed Forward in Neural Networks
+
+### Introduction
+In the previous session, you learned how the information flows through a neural network in the forward direction. In this session, you will study the process of training neural networks called **backpropagation**. 
+
+By the end of this session, you will be able to **build your own neural network from scratch** in Numpy. This is the task of the assignment of this module.
+
+### What Does Training a Network Mean?
+In the previous session, you learnt how the information passes through neural networks.  
+
+In this session, you will understand how neural networks are **trained**. Recall that the training task is to compute the optimal weights and biases by **minimizing some cost function**. In the upcoming lectures, you will study all the elements involved in training neural networks in detail - the loss function, backward flow of information, optimisation techniques etc.
+
+Let's start with a quick recap of defining the training task.
+
+![title](img/training_network.png)
+
+The task of training neural networks is exactly the same as that of other ML models such as linear regression, SVMs etc. The desired output (output from the last layer) minus the actual output is the **cost** (or the **loss**), and we have to tune the parameters w and b such that **the total cost is minimized**.  
+
+![title](img/training_network1.JPG)
+
+### Complexity of the Loss Function
+You saw that training refers to the task of finding the optimal combination of weights and biases to minimise the total loss (with a fixed set of hyperparameters). In this segment, you will understand the anatomy and complexity of the cost function.
+
+The optimisation is done using the familiar gradient descent algorithm. Recall that in gradient descent, the parameter being optimised is iterated in the direction of reducing cost according to the following rule:
+
+![title](img/loss_function.JPG)
+
+The same can be written for the biases. Note that the weights and biases are often collectively represented by one matrix called ***W***. Going forward, ***W*** will by default refer to the matrix of all the weights and biases.
+
+The main challenge is that ***W*** is a huge matrix, and thus, the total loss ***L*** as a function of ***W*** is a complex function. Let's see how we deal with this complexity.
+
+![title](img/cost_function.png)
+
+You learnt that the loss function for a very small and simple neural network can be very complex. The best way to minimise this complex loss function is by using gradient descent.
+
+Before we study backpropagation in detail, let's revisit some basic concepts of gradient descent optimisation.
+
+### Comprehension - Gradient Descent
+Gradient descent is an optimisation algorithm used to find the minimum of a function. The basic idea is to use the gradient of the function to find **the direction of steepest descent**, i.e. the direction in which the value of the function decreases most rapidly, and move towards the minima iteratively.   
+
+![title](img/gradient_descent.JPG)
+
+The algorithm starts with an initial arbitrary guess of ***w***, computes the gradient at that point, and updates ***w*** according to the rule iteratively:s
+
+![title](img/loss_function.JPG)
+
+![title](img/gradient_descent1.JPG)
+
+Notice that we have moved closer to the minima. Try doing another iteration and verify that you move closer.
+
+![title](img/gradient_descent2.JPG)
+
+![title](img/gradient_descent3.JPG)
+
+![title](img/gradient_descent4.JPG)
+
+![title](img/gradient_descent5.JPG)
+
+### Comprehension - Training a Neural Network
+ Training a network essentially means to find the optimal set of weights and biases to minimise the total loss. The loss function is the difference between the actual output and the output predicted by the network (aggregated across all training data points).
+
+ Let's consider a simple neural network acting as an OR gate to understand the training process.
+
+ ![title](img/training_nn.JPG)
+
+ ![title](img/training_nn1.JPG)
+
+ ![title](img/training_nn2.JPG)
+
+ So, you see that the weights are adjusted in such a way that the total loss is minimized. Now, having understood this, let's study **backpropagation** in detail.
+
+### Updating the Weights and Biases - I
+In the previous segment, you got an intuition of how training happens. 
+
+In the next few segments, you will study backpropagation in detail. By the end of this session, you will be able to build your own neural network in Numpy from the ground up, which is the assignment of this module.
+
+Let's start off this segment by setting the problem statement for backpropagation. We shall use a simple network, a 3-layer network with 2 hidden layers and 1 output layer. 
+
+![title](img/backpropagation.png)
+
+![title](img/backpropagation1.JPG)
+
+Now that we have defined the problem statement of backpropagation, let's specify all the parts of this network in detail, i.e. the number of parameters, hyperparameters etc.
+
+The network that we'll use to implement backpropagation is shown below:
+
+![title](img/backpropagation2.JPG)
+
+![title](img/backpropagation3.JPG)
+
+### Updating the Weights and Biases - II
+In the previous segment, we defined the architecture of the network, the dimensions of the weight and bias matrices etc. Let's now perform the first two steps before we can propagate the gradients in the backward direction:
+
+1. Forward propagation (feedforward)
+2. Defining the cost/loss function
+
+![title](img/backpropagation4.png)
+
+![title](img/backpropagation5.JPG)
+
+![title](img/backpropagation6.JPG)
+
+You also understood how minimising this loss function makes sense. 
+
+You can notice that the cross-entropy loss is designed such that when the predicted probability is close to the ground truth, the loss value is close to zero, and vice-versa.
+
+Now, before we move to the next step, let us introduce a new terminology which will make the notations much easier and neater while computing the gradients:
+
+![title](img/backpropagation7.png)
+
+![title](img/backpropagation8.JPG)
+
+![title](img/backpropagation9.JPG)
+
+### Updating the Weights and Biases - III
+
+![title](img/backpropagation10.JPG)
+
+![title](img/backpropagation11.JPG)
+
+![title](img/backpropagation12.png)
+
+![title](img/backpropagation13.JPG)
+
+![title](img/backpropagation14.png)
+
+![title](img/backpropagation15.JPG)
+
+![title](img/backpropagation16.JPG)
+
+![title](img/backpropagation17.JPG)
+
+### Sigmoid Backpropagation
+
+![title](img/sigmoid_backwardpropagation.JPG)
+
+![title](img/sigmoid_backwardpropagation1.JPG)
+
+![title](img/sigmoid_backwardpropagation2.JPG)
+
+### Updating the Weights and Biases - IV
+
+![title](img/updating_weights_baises.JPG)
+
+In the previous segment, we had calculated the gradients of the softmax layer with three outputs . To simplify the notations a little, from now on we'll use a softmax with only two outputs. 
+
+The gradient calculation of the softmax layer gets a bit too messy working with three outputs. So, to simplify the calculations of the gradients to the left of this layer, we shall consider the following network from now on:
+
+![title](img/updating_weights_baises1.JPG)
+
+The only difference here is that the last layer now has two neurons instead of three. You should be assured that this won't affect the backpropagation algorithm (in principle) at all.
+
+With the new network, we have the following for the last layer: 
+
+![title](img/updating_weights_baises2.JPG)
+
+![title](img/updating_weights_baises3.JPG)
+
+![title](img/updating_weights_baises4.JPG)
+
+![title](img/updating_weights_baises5.JPG)
+
+![title](img/updating_weights_baises6.JPG)
+
+![title](img/updating_weights_baises7.JPG)
+
+![title](img/updating_weights_baises8.JPG)
+
+![title](img/updating_weights_baises9.JPG)
+
+### Updating the Weights and Biases - V
+
+![title](img/updating_weights_baises10.JPG)
+
+![title](img/updating_weights_baises11.JPG)
+
+![title](img/updating_weights_baises12.JPG)
+
+Hence, it is important to conceptually understand how the backpropagation algorithm works, although in practice you will be using libraries such as Keras, Tensorflow etc. to train neural networks. 
+
+### Updating the Weights and Biases - VI
+Let's summarize what we have computed until now for the network below.
+
+![title](img/updating_weights_baises13.JPG)
+
+![title](img/updating_weights_baises14.JPG)
+
+![title](img/updating_weights_baises15.png)
+
+In this lecture, we went through one full trip through the network for a single data point, that is: 
+1. Feedforward
+2. Define the loss function
+3. Backpropagation
+
+Let's write down the pseudocode of this algorithm:
+
+![title](img/updating_weights_baises16.JPG)
+
+So this is the consolidated algorithm for a single data point. But don't you think there is something missing here? We haven't yet updated any of the weights! We shall do the update step in while after processing the above steps for a **batch**, since making a single update for one data point will be extremely slow.
+
+Let's go through that in the next segment.
+
+### Batch in Backpropagation
+Until now, we have been working with a single data point for doing feedforward and backpropagation. But in practice, doing this for a large number of training data points will be extremely inefficient. 
+
+In this segment, you will learn to modify the feedforward and backpropagation algorithms so that you can work with **batches of multiple data points**.
+
+Let's now understand backpropagation in terms of batches of data points.
+
+![title](img/batch_backpropagation.png)
+
+To summarise, for updating weights and biases using plain backpropagation, you have to scan through the entire data set to make a single update to the weights. This is computationally very expensive  for large datasets. Thus, you use multiple batches (or **mini-batches**) of data points, compute the **average gradient** for a batch, and update the weights based on that gradient.
+
+But there is a danger in doing this - you are making weight updates based only on gradients computed for small batches, not the entire training set. Thus, you make **multiple passes** through the entire training set using **epochs**. An **epoch is one pass** through the entire training set, and you use multiple epochs (typically 10, 20, 50, 100 etc.) while training. In each epoch, you **reshuffle** all the data points, divide the reshuffled set into **m** batches, and update weights based on gradient of each batch. 
+
+This training technique is called **stochastic gradient descent**, commonly abbreviated as **SGD**.
+
+In most libraries such as Tensorflow, the **SGD training procedure** is as follows:
+* You specify the number of epochs (typical values are 10, 20, 50, 100 etc.) - more epochs require more computational power 
+* You specify the number of batches **m** (typical values are 32, 64, 128, etc.)
+* At the start of each epoch, the data set is **reshuffled** and divided into m batches.
+* The **average gradient of each batch** is then used to make a weight update.
+* The training is complete at the end of all the epochs
+
+Apart from being computationally faster, the SGD training process has another big advantage - it actually helps you reach the **global minima** (instead of being stuck at a **local minima**).
+
+Let's now understand this second advantage better.
+
+![title](img/batch_backpropagation1.png)
+
+Thus, to avoid the problem of getting stuck at a local optimum, you need to strike a balance between **exploration** and **exploitation**.
+
+**Exploration** means that you try to minimise the loss function with different starting points of ***W*** and ***b***, i.e., you initialise ***W*** and ***b***  with different values. On the other hand, **exploitation** means that you try to reach the global minima starting from a particular ***W*** and ***b*** and do not explore the terrain at all. That might lead you to the lowest point locally, but not the necessarily the global minimum.
+
+Having understood batches and how they help in efficient training, let's now write the pseudocode for batch training in the next segment.
+
+### Training in Batches
+Until now, you have learned the backpropagation algorithm for a single data point. In this segment, you'll learn to write the backpropagation algorithm for a **batch** (or **mini batch**) of data points. 
+
+![title](img/training_batches.JPG)
+
+To summarise, you learnt how the backpropagation algorithm can be written for batches of multiple data points. The important points are summarised below:
+
+![title](img/batch_backpropagation2.JPG)
+
+![title](img/batch_backpropagation3.JPG)
+
+![title](img/batch_backpropagation4.JPG)
+
+![title](img/training_batches1.JPG)
+
+
+
