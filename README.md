@@ -648,5 +648,86 @@ To summarise, you learnt how the backpropagation algorithm can be written for ba
 
 ![title](img/training_batches1.JPG)
 
+![title](img/training_batches2.JPG)
 
+## Modifications to Neural Networks
 
+### Introduction
+In this session, you will learn some commonly used best practices for training neural networks, regularisation strategies and implementation of neural networks using Tensorflow and Keras.
+
+### Regularization
+ In this session, we'll discuss some best practices and practical aspects of training neural networks. 
+
+Neural networks are usually large, complex models with tens of thousands of parameters, and thus have a tendency to **overfit** the training data. As with many other ML models, **regularization** is a common technique used in neural networks to address this problem. Let’s start with a quick recap of regularization.
+
+![title](img/regularization.png)
+
+To summarise, one common regularization technique is to add a **regularization term** to the objective function. This term ensures that the model doesn’t capture the 'noise' in the dataset, i.e. does not overfit the training data. This, in turn, leads to better **generalizability** of the model.
+
+There are different kinds of regularization techniques, and the one discussed above can be represented in a general form as: 
+
+Objective function = Loss Function (Error term) + Regularization term
+
+Recall that the **bias** of a model represents the amount of error the model will commit on a given dataset, while the **variance** of the model measures how much the model changes when trained on a different dataset.
+
+In the next lecture, let’s study the different types of regularization techniques used in neural networks. This is something you would have studied earlier in regression also - recall that L1 and L2 regularisation (also called ridge and lasso regression) are commonly used to regularize regression models. The same idea can be extended to neural networks.
+
+The objective function can be written as:
+
+![title](img/regularization_l1_l2.JPG)
+
+Note that you consider only the weights (and not the biases) in the norm since trying to regularize bias terms has empirically proven to be counterproductive for performance.
+
+![title](img/regularization1.png)
+
+The 'parameter norm' regularisation that we have just discussed is similar to what you had studied in linear regression in almost every aspect. As in **lasso regression** (L1 norm), we get a **sparse weight matrix**, which is not the case with the L2 norm. Despite this fact, the L2 norm is more common because the sum of the squares term is easily **differentiable** which comes in handy during backpropagation.
+
+Apart from using the parameter norm, there is another popular neural network regularization technique called **dropouts**. Let’s see how it works in the next segment.
+
+### Dropouts
+In the previous segment, you learnt the two basic regularization techniques - the L1 and the L2 norm. Let's now look at another popularly used regularization technique used specifically for neural networks called **dropouts**. 
+
+The dropout operation is performed by multiplying the weight matrix ***Wl*** with an ***α*** mask vector as shown below.
+
+![title](img/dropouts.JPG)
+
+You can see that all the elements in the last column become zero.
+
+Some important points to note regarding dropouts are:
+* Dropouts can be applied only to some layers of the network (in fact, that is a common practice - you choose some layer arbitrarily to apply dropouts to)
+* The mask ***α*** is generated independently for each layer during feedforward, and the same mask is used in backpropagation
+* The mask changes with each minibatch/iteration, are randomly generated in each iteration (sampled from a Bernoulli with some p(1)=q)
+
+Why the dropout strategy works well is explained through the notion of a **manifold**. Manifold captures the observation that in high dimensional spaces, the data points often actually lie in a **lower-dimensional manifold**. This is observed experimentally and can be understood intuitively as well. 
+
+![title](img/dropouts1.JPG)
+
+Apart from reducing the complexity of the model, dropouts help us in another way. Let's see how:
+
+Dropouts help in symmetry breaking as well. There is every possibility of the creation of communities within neurons which restricts them from learning independently. Hence, by setting some random set of the weights to zero in every iteration, this community/symmetry is broken. Note that there a different mini batch is processed in every iteration in an epoch, and dropouts are applied to each mini batch.
+
+![title](img/dropouts2.JPG)
+
+Please note that '0.2' here is the **probability of zeros** and not ones. This is also one of the hyperparameters. Also, note that you **do not apply** dropout to the output layer.
+
+The mask used here is a matrix. Also, the dropout is applied only during training, not at test time. Having said that, there have been Bayesian interpretations which expect the dropout to be applied during test time. This is discussed in the next optional session.
+
+**Additional Reading:**
+1. A short [StackExchange answer](https://datascience.stackexchange.com/questions/5694/dimensionality-and-manifold) explaining the intuition of manifolds
+
+### Batch Normalization
+Until now, you have seen two types of regularization strategies for Neural Networks. Let's now look at one of the widely used tricks in training a Neural Network called **batch normalization**.
+
+Before moving ahead, let's first clearly understand the problem batch normalisation is trying to solve. The feed forward equations for a single data point are given below:
+
+![title](img/batch_normalization.JPG)
+
+![title](img/batch_normalization1.JPG)
+
+Batch normalisation is usually done for all the layer outputs except the output layer.
+
+![title](img/batch_normalization2.JPG)
+
+![title](img/batch_normalization3.JPG)
+
+![title](img/batch_normalization4.JPG)
